@@ -26,9 +26,8 @@ async def main():
     # Create a http session
     # send it off to a worker task
     async with aiohttp.ClientSession() as session:
-        response = await worker('bob', 3, session)
-        print(f'response is {response}. type: {type(response)}')
-    # await asyncio.sleep(1)
+        sums = await asyncio.gather(*(worker(f'w{i}', n, session) for i, n in enumerate(range(2, 25))))
+        print(f'sums: {sums}')
 
 
 if __name__ == "__main__":
